@@ -1,0 +1,11 @@
+<h2>Users</h2>
+<ul>
+  <% for user in @all_users %>
+    <li>
+      <%= link_to "[X]", 
+            { :controller => "login", :action => "delete_user", :id => user},
+            { :method => :post, :confirm => "Really delete #{user.name}?"} %>
+      <%= h(user.name) %>
+    </li>
+  <% end %>
+</ul>

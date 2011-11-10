@@ -1,0 +1,8 @@
+<div id="search-block">
+  <%= form_tag :action => :list %>
+    <%= text_field_tag 'query', @query, :size => 40 %>
+    <%= submit_tag "Search Book" %>
+  <%= end_form_tag %>
+</div>
+
+<%= render :partial => 'book_list', :object => @books %>

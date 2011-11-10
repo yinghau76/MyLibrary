@@ -1,0 +1,74 @@
+<% query = params[:amazon_search] %>
+
+<div id="amazon-search">
+  <b>Search book title on amazon.com</b>
+  <div id="search-box">
+    <% indicator = 'amazon-search-indicator' %>
+    <%
+    if amazon_search.instance_of? Book
+      url_search = { :action => 'ajax_amazon_search', :book_id => amazon_search }
+    elsif amazon_search.instance_of? Document
+      url_search = { :action => 'ajax_amazon_search', :doc_id => amazon_search }
+      doc = amazon_search
+      query ||= File.basename(doc.filename, File.extname(doc.filename))
+    end
+    %>
+    <%= form_remote_tag(
+           :url => url_search,
+           :loading => "Element.show('#{indicator}')",
+           :complete => "Element.hide('#{indicator}')") %>
+      <%= text_field_tag 'amazon_search', query, :size => 80 %>
+      <%= submit_tag "Search" %>
+      <%= image_tag("indicator.gif", :id => indicator, :style => 'display:none') %>
+    <%= end_form_tag %>
+  </div>
+
+<% unless query.nil? %>
+  <div id="book-list">
+    <table>
+    <%
+    if query =~ /^\s*([\d-]+)\s*$/
+      products = search_books_by_asin($1)
+    else
+      products = search_books_by_title(query)
+    end
+    %>
+    <% for info in products %>
+      <tr>
+        <td><a href="<%= info.url %>"><img style="padding-right:10px;padding-bottom:10px;" border="0" src="<%= info.image_url_medium %>" /></a></td>
+        <td valign="top">
+          <span class="list-title"><%= h info.product_name %></span><br/>
+          <% if info.authors %>
+          by <i><%= h info.authors.join(", ") %></i>, <%= h info.manufacturer %><br/>
+          <% end %>
+          <%= info.release_date %><br/>
+          <%= info.isbn %>
+
+          <div id="amazon-update">
+          <% if amazon_search.instance_of? Book %>
+            <% book = amazon_search %>
+            <% indicator = "#{info.isbn}-update-indicator" %>
+            <%= form_remote_tag(
+                   :url => { :action => 'ajax_book_update', :id => book },
+                   :loading => "Element.show('#{indicator}')",
+                   :complete => "Element.hide('#{indicator}')") %>
+              <%= text_field_tag 'title', info.product_name, :style => 'display:none' %>
+              <%= text_field_tag 'isbn', info.isbn, :style => 'display:none' %>
+              <%= submit_tag "Update Info" %>
+            <%= end_form_tag %>
+            <%= image_tag("indicator.gif", :id => indicator, :style => 'display:none') %>
+          <% elsif amazon_search.instance_of? Document %>
+            <%= start_form_tag :action => :new, :document => doc %>
+              <%= text_field_tag 'book[title]', info.product_name, :style => 'display:none' %>
+              <%= text_field_tag 'book[isbn]', info.isbn, :style => 'display:none' %>
+              <%= submit_tag "Add Book" %>
+            <%= end_form_tag %>
+          <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+  </div>
+<% end %>
+</div>

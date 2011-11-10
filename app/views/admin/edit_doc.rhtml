@@ -1,0 +1,20 @@
+<h2>Editing Document</h2>
+
+<% form_for :doc do |form| %>
+  <%= error_messages_for 'document' %>
+  <p><label for="document_path">Path</label><br/>
+  <%= form.text_field 'path', "size" => 80 %></p>
+  <%= submit_tag 'Update' %>
+<% end %>
+
+<% unless @doc.book.nil? %>
+<p>This document belongs to [<%= link_to @doc.book.title, :action => :show, :id => @doc.book %>].</p>
+<% else %>
+<%= start_form_tag :action => 'delete_doc', :id => @doc %>
+  <%= submit_tag 'Delete' %>
+<%= end_form_tag %>
+<% end %>
+
+<div id="amazon-search-background">
+  <%= render :partial => "amazon_search", :object => @doc %>
+</div>

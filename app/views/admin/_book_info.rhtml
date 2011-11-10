@@ -1,0 +1,44 @@
+<% info = book_info %>
+
+<div id="book-info">
+  <h3><%= h info.product_name %></h3>
+  <table cellpadding="5">
+    <tr border="0">
+      <td valign="top">
+        <% if info.authors %>
+          <p>by <i><%= h info.authors.join(", ") %></i>, <%= h info.manufacturer %></p>
+        <% end %>
+        <table>
+        <% if @book.isbn %>
+          <tr><td>ISBN:</td><td><%= h @book.isbn %></td></tr>
+        <% end %>
+          <tr><td>Release Date:</td><td><%= info.release_date %></td></tr>
+        </table>
+
+      <% @book.documents.each do |doc| %>
+        <p>
+          Document #<%= @book.documents.index(doc) + 1 %>:<br/> 
+          <%= link_to image_tag(doc.file_icon, :alt => File.basename(doc.path),  :style => "float:left; border:0; margin:10px"), :action => 'download', :id => doc %>
+          <%= File.basename(doc.path) %>
+          <br/>
+          [<%= link_to 'edit', :action => 'edit_doc', :id => doc %> |
+          <%= link_to_remote 'delete', :url => {:action => 'ajax_destroy_doc', :id => @book, :doc => doc.id}, :confirm => 'Are you sure?' %> |
+          <%= link_to_remote 'purge', :url => {:action => 'ajax_purge_doc', :id => @book, :doc => doc.id}, :confirm => 'Are you sure?' %>]
+        </p>
+      <% end %>
+        <br/>
+
+        <p><%= info.product_description %></p>
+
+        <div class="comment"><%= textilize @book.comment %></div>
+
+        <div>
+        <%= render :partial => 'book_actions', :object => @book %>
+        </div>
+      </td>
+    <% if info.image_url_large %>
+      <td valign="top"><%= link_to(image_tag(info.image_url_large, :border => 0, :align => 'left'), info.url) %></td>
+    <% end %>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,19 @@
+<% switch_page_action = page_nav %>
+<% indicator = 'switch-page-indicator' %>
+
+<div class="navigation-block">
+<% (1..@pages.length).each do |index|
+  page = @pages[index] %>
+<% if page == @pages.current %>
+  [<%= index.to_s %>]
+<% else %>
+  <%=
+    link_to(
+      index.to_s,
+      { :action => switch_page_action, :page => page, :query => @query },
+      :method => :post)
+  %>
+<% end %>
+<% end %>
+  <%= image_tag("indicator.gif", :id => indicator, :style => 'display:none') %>
+</div>

@@ -1,0 +1,8 @@
+page[:'book-info'].replace_html(
+  :partial => 'book_info',
+  :object => get_book_info(@book))
+
+page[:'book-info'].visual_effect(
+  :highlight,
+  :startcolor => "#f8f8b0" ,
+  :endcolor => "#ffffff")

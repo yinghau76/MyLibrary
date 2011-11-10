@@ -1,0 +1,7 @@
+<% book = book_actions %>
+[<%= link_to 'edit', :action => 'edit', :id => book %> |
+<% unless book.documents.empty? %>
+<%= link_to 'purge', { :action => 'purge', :id => book }, :confirm => 'Are you sure?', :method => :post %> |
+<%= link_to 'rename', { :action => 'rename', :id => book }, :method => :post %> |
+<% end %>
+<%= link_to 'delete', { :action => 'destroy', :id => book }, :confirm => 'Are you sure?', :method => :post %>]

@@ -1,0 +1,6 @@
+<h2>Editing Book</h2>
+
+<%= start_form_tag :action => 'update', :id => @book %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Update' %>
+<%= end_form_tag %>

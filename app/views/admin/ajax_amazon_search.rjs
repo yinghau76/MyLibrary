@@ -1,0 +1,9 @@
+if @book
+  page[:'amazon-search'].replace_html(
+    :partial => 'amazon_search',
+    :object => @book)
+elsif @doc
+  page[:'amazon-search'].replace_html(
+    :partial => 'amazon_search',
+    :object => @doc)
+end

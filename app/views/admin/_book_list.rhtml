@@ -1,0 +1,25 @@
+<% books = book_list %>
+
+<div id="book-list">
+<% unless books.empty? %>
+  <%= render :partial => 'page_nav', :object => 'list' %>
+  <table cellpadding="5" cellspacing="0">
+  <% for book in books %>
+    <tr valign="top" class="<%= cycle('list-line-odd', 'list-line-even') %>">
+      <% info = get_book_info(book) %>
+      <td><%= link_to(image_tag(info.image_url_small, :border => 0), info.url) if info.image_url_small %></td>
+      <td>
+        <span class="list-title-show">
+          <%= link_to book.title, book_url(:id => book) %>
+        </span><br/>
+        <%= textilize book.comment unless book.comment.nil? %>
+      </td>
+      <td class="list-actions">
+        <%= render :partial => 'book_actions', :object => book %>
+      </td>
+    </tr>
+  <% end %>
+    <tr><td colspan="3"><%= render :partial => 'page_nav', :object => @book_pages %></td></tr>
+  </table>
+<% end %>
+</div>

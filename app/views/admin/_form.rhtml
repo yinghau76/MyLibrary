@@ -1,0 +1,15 @@
+<p><%= error_messages_for 'book' %></p>
+
+<!--[form:book]-->
+<p><label for="book_title">Title</label><br/>
+<%= text_field 'book', 'title', :size => 80 %></p>
+
+<p><label for="book_isbn">Isbn</label><br/>
+<%= text_field 'book', 'isbn', :size => 80 %></p>
+
+<p><label for="book_tags">Tags</label><br/>
+<%= text_field 'book', 'tags', :size => 80 %></p>
+
+<p><label for="book_comment">Comment</label><br/>
+<%= text_area 'book', 'comment', :cols => 80 %></p>
+<!--[eoform:book]-->

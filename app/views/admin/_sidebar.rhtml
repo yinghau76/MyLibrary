@@ -1,0 +1,14 @@
+<% search_action = sidebar %>
+
+<div id="sidebar">
+  <span id="admin-commands">
+    <%= link_to 'Books', :action => 'list' %>
+      (<%= link_to 'new', :action => :new %>,
+       <%= link_to 'read', :action => 'list', :query => 'tag:read' %>,
+       <%= link_to 'buy', :action => 'list', :query => 'tag:buy' %>,
+       <%= link_to 'download', :action => 'list', :query => 'tag:download' %>, or
+       <%= link_to 'unavailable', :action => 'list', :query=> 'type:unavailable' %>) |
+    <%= link_to 'Documents', :action => 'list_doc' %>
+      (<%= link_to 'unknown', :action => 'list_doc', :query => 'type:unknown' %>)
+  </span>
+</div>

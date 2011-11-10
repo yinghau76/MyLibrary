@@ -1,0 +1,19 @@
+<% docs = doc_list %>
+
+<div id="doc-list">
+<% unless docs.empty? %>
+  <table cellpadding="5" cellspacing="0">
+    <tr><td colspan="3"><%= render :partial => 'page_nav', :object => :list_doc %></td></tr>
+  <% for doc in docs %>
+    <tr valign="top" class="<%= cycle('list-line-odd', 'list-line-even') %>">
+      <td>
+        <span class="list-title-show">
+          <%= link_to doc.path, :action => 'edit_doc', :id => doc %>
+        </span><br/>
+      </td>
+    </tr>
+  <% end %>
+    <tr><td colspan="3"><%= render :partial => 'page_nav', :object => :list_doc %></td></tr>
+  </table>
+<% end %>
+</div>

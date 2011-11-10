@@ -1,0 +1,3 @@
+page['book-list'].replace_html(
+  :partial => 'book_list',
+  :object => @books)
